@@ -43,8 +43,8 @@ Aplicativo para gerenciamento dos gastos pessoais.
 | RNF01  | Responsividade            | O aplicativo deve funcionar perfeitamente em dispositivos móveis de diferentes tamanhos.      | Must Have   |
 | RNF02  | Segurança de Dados        | Todos os dados devem ser armazenados e transmitidos de forma segura, utilizando criptografia. | Must Have   |
 | RNF03  | Performance               | O sistema deve responder a solicitações em menos de 2 segundos em 95% dos casos.              | Should Have |
-| RNF04  | Segurança                 | O sistema deve logar um usuário no aplicativo                                                 | Must Have   |
-| RNF05  | 
+| RNF04  | Segurança e Login         | O sistema deve garantir que apenas usuários autenticados possam acessar seus dados pessoais, utilizando autenticação segura (e.g., e-mail e senha com criptografia).                                                              | Must Have   |
+
 ---
 
 ## **Priorização (MoSCoW)**
