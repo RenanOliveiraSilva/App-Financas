@@ -11,9 +11,9 @@ Aplicativo para gerenciamento dos gastos pessoais.
 
 ### **Perfis de Usuários**
 - **Perfil 1:** Adolescentes 
-  - Necessidade: Controlar despesas mensais e poupar dinheiro.
+  - Necessidade: Controlar receitas e economizar para compras maiores, como roupas ou eletrônicos.
 - **Perfil 2:** Adultos
-  - Necessidade: Monitorar pequenos gastos diários.
+  - Necessidade: Organizar finanças para pagar contas, poupar e controlar pequenos gastos.
 
 ### **Principais Dores**
 - **Exemplo:** 
@@ -29,10 +29,13 @@ Aplicativo para gerenciamento dos gastos pessoais.
 | ID     | Nome                      | Descrição                                                                                     | Prioridade  |
 |--------|---------------------------|-----------------------------------------------------------------------------------------------|-------------|
 | RF01   | Cadastro de Despesas      | O sistema deve permitir que o usuário cadastre despesas com categorias, valores e datas.      | Must Have   |
-| RF02   | Cadastro de Receitas      | O sistema deve permitir que o usuário registre suas fontes de receita mensalmente.            | Must Have   |
-| RF03   | Geração de Relatórios     | O sistema deve gerar relatórios financeiros mensais com gráficos de gastos e receitas.        | Should Have |
-| RF04   | Alertas de Gastos         | O sistema deve notificar o usuário quando um limite de gasto definido for ultrapassado.       | Could Have  |
-| RF05   | Gerenciar Usuario         | O sistema deve gerenciar (CRUD) um usuário.                                                   | Must Have   |
+| RF02   | Ciclo Personalizado       | O sistema deve permitir ao usuário definir o início e o fim do ciclo financeiro.              | Must Have   |
+| RF03   | Receitas por Ciclo        | O sistema deve permitir registrar receitas em diferentes datas dentro de um ciclo financeiro. | Must Have   |
+| RF04   | Geração de Relatórios     | O sistema deve gerar relatórios financeiros mensais com gráficos de gastos e receitas.        | Should Have |
+| RF05   | Alertas de Gastos         | O sistema deve notificar o usuário quando um limite de gasto definido for ultrapassado.       | Could Have  |
+| RF06   | Gerenciar Usuario         | O sistema deve gerenciar (CRUD) um usuário.                                                   | Must Have   |
+| RF07   | Cadastro de categorias    | O sistema deve cadastrar categoria de gastos e receitas.                                      | Must Have   |
+
 
 ---
 
@@ -52,6 +55,7 @@ Aplicativo para gerenciamento dos gastos pessoais.
 ### **Must Have**
 - Cadastro de despesas e receitas.
 - Visualização de saldo atual.
+- Definicição de período
 
 ### **Should Have**
 - Relatórios mensais.
