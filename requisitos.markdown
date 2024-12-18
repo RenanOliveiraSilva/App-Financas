@@ -70,12 +70,40 @@ Aplicativo para gerenciamento dos gastos pessoais.
 
 ---
 
-## **Notas Adicionais**
+## **Modelagem BPMN - Fluxo Principal**
 
-- Outras ideias ou insights que surgirem durante a elicitação de requisitos.
+### **Atores:**
+- Usuário
+- Sistema
+
+### **Fluxo: Cadastro de Despesas e Atualização do Saldo**
+1. **Usuário**: Inicia o aplicativo e autentica com login.
+2. **Sistema**: Valida o login e exibe o painel principal.
+3. **Usuário**: Acessa a tela de cadastro de despesas.
+4. **Usuário**: Insere os dados da despesa (categoria, valor, data) e confirma o registro.
+5. **Sistema**:
+   - Valida os dados inseridos.
+   - Atualiza o saldo do usuário com base na nova despesa.
+   - Armazena a despesa no banco de dados.
+6. **Usuário**: Visualiza a despesa cadastrada no histórico e o saldo atualizado.
+7. **Sistema**: (Opcional) Envia notificação se o limite de gasto definido for ultrapassado.
+
+### **Fluxo Alternativo: Registro de Receita**
+1. **Usuário**: Seleciona a opção de cadastrar uma receita.
+2. **Usuário**: Insere os dados da receita (origem, valor, data) e confirma.
+3. **Sistema**:
+   - Valida os dados inseridos.
+   - Atualiza o saldo com base na nova receita.
+   - Armazena a receita no banco de dados.
+4. **Usuário**: Visualiza o saldo atualizado no painel.
 
 ---
 
-## **Alterações Futuras**
+### **Fluxo Simplificado para Login e Autenticação**
+1. **Usuário**: Insere e-mail e senha na tela de login.
+2. **Sistema**:
+   - Valida as credenciais.
+   - Se válidas, concede acesso ao painel principal.
+   - Se inválidas, retorna mensagem de erro ao usuário.
+3. **Usuário**: Acessa o sistema autenticado.
 
-Espaço para documentar modificações nos requisitos conforme o projeto evoluir.
