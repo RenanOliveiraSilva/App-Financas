@@ -13,4 +13,18 @@ model User {
   email    String   @unique
   password String
   createdAt DateTime @default(now())
+
+  cycleStartDay Int?
+
+  incomes   Income[]
+}
+
+model Income {
+  id          Int      @id @default(autoincrement())
+  description String   @db.VarChar(255)
+  amount      Float
+  date        DateTime @default(now()) // Para receitas variáveis
+  type        String   @default("fixed") // fixed ou variable
+  userId      Int
+  User        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

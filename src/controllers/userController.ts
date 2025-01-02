@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import userServices from '../services/userServices';
+import userServices from '../services/userService';
 import jwt from 'jsonwebtoken';
 
 const SECRET_KEY = process.env.JWT_SECRET  || 'minha-chave-secreta';

@@ -1,12 +1,13 @@
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
+import { decode } from 'punycode';
 
 const SECRET_KEY = process.env.JWT_SECRET || 'minha-chave-secreta';
 
 // Estende a interface Request
 declare module 'express-serve-static-core' {
     interface Request {
-        user?: string | JwtPayload; // Adiciona a propriedade `user`
+        user?: JwtPayload; // Adiciona a propriedade `user`
     }
 }
 
@@ -21,8 +22,8 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
     const token = authHeader.split(' ')[1];
 
     try {
-        const user = jwt.verify(token, SECRET_KEY) as string | JwtPayload;
-        req.user = user;
+        const decoded = jwt.verify(token, SECRET_KEY) as JwtPayload;
+        req.user = decoded;
         next(); // Continua para o próximo middleware/rota
     } catch (error) {
         res.status(403).json({ error: 'Token inválido' });
