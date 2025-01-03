@@ -5,6 +5,7 @@ import { authenticateToken } from '../middlewares/token';
 const cycleRouter = Router();
 
 cycleRouter
+    .get('/getCycleStartDay', authenticateToken, cycleController.getCurrentCycle)
     .post('/initialCycle', authenticateToken, cycleController.postInitialCycle);
 
 export default cycleRouter;

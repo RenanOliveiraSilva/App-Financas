@@ -17,6 +17,7 @@ model User {
   cycleStartDay Int?
 
   incomes   Income[]
+  expenses  Expense[]
 }
 
 model Income {
@@ -27,4 +28,18 @@ model Income {
   type        String   @default("fixed") // fixed ou variable
   userId      Int
   User        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Expense {
+  id                 Int       @id @default(autoincrement())
+  description        String    @db.VarChar(255)
+  amount             Float
+  date               DateTime
+  userId             Int
+  cycleStartDay      Int?
+  expenseType        String    // 'unique', 'installment', 'recurring'
+  installments       Int?      // Total de parcelas, apenas para 'installment'
+  currentInstallment Int?      // Parcela atual, apenas para 'installment'
+  recurring          Boolean?  // Indica se a despesa se repete automaticamente
+  User               User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

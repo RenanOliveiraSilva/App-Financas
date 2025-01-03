@@ -1,5 +1,6 @@
 import { PrismaClient, User } from '@prisma/client';
 import bcrypt from 'bcrypt';
+import { get } from 'http';
 
 const prisma = new PrismaClient();
 
@@ -15,6 +16,16 @@ const userServices = {
                 email
             }
         })
+    },
+    getCycleUserByUserId: async (userId: number): Promise<{ cycleStartDay: number | null } | null> => {
+        return await prisma.user.findUnique({
+            where: {
+                id: userId
+            },
+            select: {
+                cycleStartDay: true
+            }
+        });
     },
     createUser: async(email: string, password: string, name: string): Promise<User> => {
         const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);

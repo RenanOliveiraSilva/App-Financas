@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import incomeServices from '../services/incomeService';
+import userServices from '../services/userService';
 
 const incomeController = {
     getAllIncomes: async (req: Request, res: Response): Promise<void> => {
@@ -34,16 +35,23 @@ const incomeController = {
         }
     },
     postCreateIncome: async (req: Request, res: Response): Promise<void> => {
+        const userId = req.user?.id;
+        const { amount, description, type, date } = req.body;
+        const cycleStartDay = await userServices.getCycleUserByUserId(userId);
+        
+        if (!cycleStartDay) {
+            res.status(400).json({ error: 'Dia de início do ciclo não encontrado' });
+            return;
+        }
+
+        if (!amount || !description || !type) {
+            res.status(400).json({ error: 'Campos obrigatórios não preenchidos' });
+            return;
+        }
+
         try {
-            const user = req.user as { id: number };
-            const { amount, description, type, date } = req.body;
 
-            if (!amount || !description || !type) {
-                res.status(400).json({ error: 'Campos obrigatórios não preenchidos' });
-                return;
-            }
-
-            const newIncome = await incomeServices.postIncome(user.id, amount, description, type, date);
+            const newIncome = await incomeServices.postIncome(userId, amount, description, type, date);
 
             res.status(201).json(newIncome);
             
@@ -78,6 +86,7 @@ const incomeController = {
     deleteIncome: async (req: Request, res: Response): Promise<void> => {
         try {
             const { id } = req.body;
+            
             if (!id) {
                 res.status(400).json({ error: 'ID da renda não informado' });
                 return;

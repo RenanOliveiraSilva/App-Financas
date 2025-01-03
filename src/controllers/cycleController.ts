@@ -17,11 +17,24 @@ const cycleController = {
                 message: 'Ciclo inicial configurado com sucesso',
                 cycleStartDay: updatedUser.cycleStartDay,
             });
+            
         } catch (error) {
             console.error('Erro ao configurar o ciclo inicial:', error);
             res.status(500).json({ error: 'Erro ao configurar o ciclo inicial' });
         }
     },
+    getCurrentCycle: async (req: Request, res: Response): Promise<void> => {
+        const userId = req.user?.id; // Obtém o ID do usuário autenticado
+
+        try {
+            const cycle = await cycleService.getCurrentCycle(userId);
+            res.status(200).json(cycle);
+            
+        } catch (error) {
+            console.error('Erro ao obter o ciclo atual:', error);
+            res.status(500).json({ error: 'Erro ao obter o ciclo atual' });
+        }
+    }
 };
 
 export default cycleController;
