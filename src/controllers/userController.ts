@@ -52,22 +52,23 @@ const userController = {
             const user = await userServices.getExistingEmailUser(email);
 
             if(!user) {
-                res.status(404).json({ error: 'Usuário não encontrado' });
+                res.status(401).json({ error: 'Usuário ou Senha inválida' });
                 return;
             }
 
             const isValidPassword = await userServices.validateUser(email, password);
 
             if(!isValidPassword) {
-                res.status(401).json({ error: 'Senha inválida' });
+                res.status(401).json({ error: 'Usuário ou Senha inválida' });
                 return;
             }
+            
             // Gerar o token
             const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, {
                 expiresIn: '1h', // Token válido por 1 hora
             });
 
-            res.status(200).json({ token });
+            res.status(200).json({ token, user });
             
         } catch (error) {
             res.status(500).json({ error: 'Erro ao logar usuário' });

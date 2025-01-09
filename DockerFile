@@ -1,0 +1,23 @@
+# Usando uma imagem leve do Node.js
+FROM node:18-alpine
+
+# Definindo o diretório de trabalho dentro do container
+WORKDIR /app
+
+# Copiando os arquivos essenciais para o container
+COPY package.json package-lock.json ./
+
+# Instalando as dependências
+RUN npm install
+
+# Copiando todo o projeto para o container
+COPY . .
+
+# Compilando o TypeScript (caso esteja usando)
+RUN npm run build
+
+# Definindo a porta que o container vai expor
+EXPOSE 3000
+
+# Comando para iniciar a API
+CMD ["npm", "run", "start"]
