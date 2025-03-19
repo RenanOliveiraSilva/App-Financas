@@ -7,39 +7,73 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum MovimentType {
+  INCOME
+  OUTCOME
+}
+
+enum IncomeType {
+  SALARY
+  UNIQUE
+  OTHER
+}
+
+enum OutcomeType {
+  BILLS
+  FOOD
+  TRANSPORT
+  ENTERTAINMENT
+  OTHER
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+}
+
 model User {
-  id       Int      @id @default(autoincrement())
-  name     String   @default("") 
-  email    String   @unique
-  password String
-  createdAt DateTime @default(now())
+  id         Int         @id @default(autoincrement())
+  name       String      @default("") 
+  email      String      @unique
+  password   String
+  createdAt  DateTime    @default(now())
 
-  cycleStartDay Int?
-
-  incomes   Income[]
-  expenses  Expense[]
+  moviments  Moviment[]
 }
 
-model Income {
-  id          Int      @id @default(autoincrement())
-  description String   @db.VarChar(255)
+model Category {
+  id          Int         @id @default(autoincrement())
+  name        String      @unique
+  description String?
+
+  moviments   Moviment[]
+}
+
+model Moviment {
+  id          Int         @id @default(autoincrement())
+  description String      @db.VarChar(255)
   amount      Float
-  date        DateTime @default(now()) // Para receitas variáveis
-  type        String   @default("fixed") // fixed ou variable
+  date        DateTime    @default(now())
+  type        MovimentType
+  incomeType  IncomeType?
+  outcomeType OutcomeType?
+
   userId      Int
-  User        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  User        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  categoryId  Int?
+  Category    Category?   @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+
+  installments Installment[]
 }
 
-model Expense {
-  id                 Int       @id @default(autoincrement())
-  description        String    @db.VarChar(255)
-  amount             Float
-  date               DateTime
-  userId             Int
-  cycleStartDay      Int?
-  expenseType        String    // 'unique', 'installment', 'recurring'
-  installments       Int?      // Total de parcelas, apenas para 'installment'
-  currentInstallment Int?      // Parcela atual, apenas para 'installment'
-  recurring          Boolean?  // Indica se a despesa se repete automaticamente
-  User               User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+model Installment {
+  id               Int            @id @default(autoincrement())
+  movimentId      Int
+  installmentNumber Int           // Número da parcela (1, 2, 3, ...)
+  amount          Float           // Valor da parcela
+  dueDate         DateTime        // Data de vencimento
+  status          PaymentStatus   @default(PENDING) // Pendente ou Pago
+
+  Moviment        Moviment        @relation(fields: [movimentId], references: [id], onDelete: Cascade)
 }

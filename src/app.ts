@@ -5,7 +5,6 @@ import cors from 'cors';
 //Rotas
 import userRoutes from './routes/userRoutes';
 import incomeRoutes from './routes/incomeRoutes';
-import cycleRoutes from './routes/cycleRoutes';
 import expenseRoutes from './routes/expenseRoutes';
 
 const app: Application = express();
@@ -17,7 +16,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Rotas
 app.use('/api/users', userRoutes); //Login, criação de usuário e listagem de usuários
 app.use('/api/incomes', incomeRoutes); //CRUD de receitas
-app.use('/api/cycles', cycleRoutes); //Configuração do ciclo
 app.use('/api/expenses', expenseRoutes); //CRUD de despesas
 
 
