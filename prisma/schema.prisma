@@ -12,23 +12,15 @@ enum MovimentType {
   OUTCOME
 }
 
-enum IncomeType {
-  SALARY
-  UNIQUE
-  OTHER
-}
-
-enum OutcomeType {
-  BILLS
-  FOOD
-  TRANSPORT
-  ENTERTAINMENT
-  OTHER
-}
-
 enum PaymentStatus {
   PENDING
   PAID
+}
+
+enum AccountType {
+  DEBIT
+  CREDIT
+  WALLET
 }
 
 model User {
@@ -45,24 +37,28 @@ model Category {
   id          Int         @id @default(autoincrement())
   name        String      @unique
   description String?
+  type        MovimentType 
 
   moviments   Moviment[]
 }
 
 model Moviment {
-  id          Int         @id @default(autoincrement())
-  description String      @db.VarChar(255)
+  id          Int           @id @default(autoincrement())
+  description String        @db.VarChar(255)
   amount      Float
-  date        DateTime    @default(now())
-  type        MovimentType
-  incomeType  IncomeType?
-  outcomeType OutcomeType?
+  date        DateTime      @default(now())
+  movimentType              MovimentType
+  type        String        @db.VarChar(50) // Fixa ou Variável
+  status      PaymentStatus @default(PENDING) // Pendente ou Pago      
+  typeAccount AccountType   // Débito, Crédito ou Dinheiro
+
+  isParcelled Boolean       @default(false) // Indica se a movimentação é parcelada ou não
 
   userId      Int
-  User        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  User        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   categoryId  Int?
-  Category    Category?   @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  Category    Category?     @relation(fields: [categoryId], references: [id], onDelete: SetNull)
 
   installments Installment[]
 }
